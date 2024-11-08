@@ -2,10 +2,11 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { FaUserCircle } from "react-icons/fa";
+// import { FaUserCircle } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import imageTobase64 from '../helpers/imageTobase64';
+import SummaryApi from '../common/urlIntigration';
 
 const SignUp = () => {
     const [shoPassword, setShoPassword] = useState(false);
@@ -43,8 +44,25 @@ const SignUp = () => {
         })
     }
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = async (e) =>{
         e.preventDefault()
+
+        if(data.password === data.confirmPassword){
+            const dataResponse = await fetch(SummaryApi.singUp.url,{
+                method : SummaryApi.singUp.method,
+                headers : {
+                    'content-type' : 'application/json'
+                },
+                body : JSON.stringify(data)
+            })
+    
+            const dataApi = await dataResponse.json();
+            
+            console.log('data', dataApi)
+        }else {
+            console.log('Please check password and confirm password')
+        }
+
     }
     return (
     <section id ='login' className=''>
@@ -52,7 +70,7 @@ const SignUp = () => {
             <div className='bg-white p-5 w-full max-w-sm mx-auto'>
                 <div className='w-20 h-20 text-xl mx-auto relative overflow-hidden rounded-full'>
                     <div>
-                        <img src = {data.profilePic}></img> || {<FaUserCircle />}
+                        <img src = {data.profilePic}></img>
                     </div>
                     <form>
                         <label>
@@ -67,20 +85,20 @@ const SignUp = () => {
                     <div className='grid'>
                         <label>Name : </label>
                         <div className='bg-slate-100 p-2 rounded-lg'>
-                            <input type='text' placeholder='User email' onChange={handleChange} value={data.email} name='User name' className='w-full h-full outline-none bg-transparent' />
+                            <input type='text' placeholder='User email' onChange={handleChange} value={data.name} name='name' required  className='w-full h-full outline-none bg-transparent' />
                         </div>
                     </div>
                     <div className='grid'>
                         <label>Email : </label>
                         <div className='bg-slate-100 p-2 rounded-lg'>
-                            <input type='email' placeholder='User email' onChange={handleChange} value={data.email} name='email' className='w-full h-full outline-none bg-transparent' />
+                            <input type='email' placeholder='User email' onChange={handleChange} value={data.email} name='email' required className='w-full h-full outline-none bg-transparent' />
                         </div>
                     </div>
                     <div className='grid'>
                         <label>Password : </label>
                         <div className='bg-slate-100 p-2 rounded-lg flex'>
-                            <input type={ shoPassword ? "" : 'password'} onChange={handleChange} value={data.password} name='password' placeholder='User password' className='w-full h-full outline-none bg-transparent' />
-                            <div className='cursor-pointer text-xl' onClick={() => setShoPassword((prev) => !prev)}>
+                            <input type={ shoPassword ? "text" : 'password'} onChange={handleChange} value={data.password} name='password' required placeholder='User password' className='w-full h-full outline-none bg-transparent' />
+                            <div className='cursor-pointer text-xl' onClick={() => setShoPassword((preve) => !preve)}>
                                 <span className=''>
                                     {
                                         shoPassword ? (<FaEyeSlash />) : (<FaEye />)
@@ -92,8 +110,8 @@ const SignUp = () => {
                     <div className='grid'>
                         <label>Confirm Password : </label>
                         <div className='bg-slate-100 p-2 rounded-lg flex'>
-                            <input type={ shoPassword ? "" : 'password'} onChange={handleChange} value={data.password} name='password' placeholder='User password' className='w-full h-full outline-none bg-transparent' />
-                            <div className='cursor-pointer text-xl' onClick={() => setShoConfirmPassword((prev) => !prev)}>
+                            <input type={ shoConfirmPassword ? "text" : 'password'} onChange={handleChange} value={data.confirmPassword} name='confirmPassword' placeholder='User confirm password' className='w-full h-full outline-none bg-transparent' />
+                            <div className='cursor-pointer text-xl' onClick={() => setShoConfirmPassword((preve) => !preve)}>
                                 <span className=''>
                                     {
                                         shoConfirmPassword ? (<FaEyeSlash />) : (<FaEye />)
