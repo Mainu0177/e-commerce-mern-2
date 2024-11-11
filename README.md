@@ -3,7 +3,7 @@
 # 2. create auth and api intigration
 # 4. user auth sign in controller
 # 5. create jwt token and cookie 
-# 6. 
+# 6. get all user contnoller with id
 # 7. 
 # 8. 
 # 9. 
@@ -17,7 +17,7 @@
 # client side
 # 1. data fetch functionality
 # 2. create react-toastify notification and sign in fuctionality
-# 3. 
+# 3. install react redux toolkit and create functionality
 # 4. 
 # 5. 
 # 6. 

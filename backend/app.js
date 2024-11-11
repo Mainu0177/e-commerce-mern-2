@@ -3,7 +3,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const createError = require('http-errors');
 const cookieParser = require('cookie-parser')
-
+require('dotenv').config()
 
 
 const { errorResponse } = require('./helpers/responseController');

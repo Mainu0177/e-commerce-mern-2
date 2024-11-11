@@ -80,7 +80,7 @@ const SignUp = () => {
             <div className='bg-white p-5 w-full max-w-sm mx-auto'>
                 <div className='w-20 h-20 text-xl mx-auto relative overflow-hidden rounded-full'>
                     <div>
-                        <img src = {data.profilePic}></img>
+                        <img src = {data.profilePic} alt='login icons' ></img>
                     </div>
                     <form>
                         <label>
