@@ -1,6 +1,9 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify';
+
+
 
 // import { FaUserCircle } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
@@ -17,8 +20,8 @@ const SignUp = () => {
         password : '',
         confirmPassword : '',
         profilePic : '',
-
     })
+    const navigate = useNavigate();
 
     const handleChange = (e) =>{
         const {name, value} = e.target
@@ -48,8 +51,8 @@ const SignUp = () => {
         e.preventDefault()
 
         if(data.password === data.confirmPassword){
-            const dataResponse = await fetch(SummaryApi.singUp.url,{
-                method : SummaryApi.singUp.method,
+            const dataResponse = await fetch(SummaryApi.signUp.url,{
+                method : SummaryApi.signUp.method,
                 headers : {
                     'content-type' : 'application/json'
                 },
@@ -57,15 +60,22 @@ const SignUp = () => {
             })
     
             const dataApi = await dataResponse.json();
+
+            if(dataApi.success){
+                toast.success(dataApi.message)
+                navigate('/login')
+            }
+            if(dataApi.error){
+                toast.error(dataApi.message)
+            }
             
-            console.log('data', dataApi)
         }else {
             console.log('Please check password and confirm password')
         }
 
     }
     return (
-    <section id ='login' className=''>
+    <section id ='signup' className=''>
         <div className='mx-auto container p-4'>
             <div className='bg-white p-5 w-full max-w-sm mx-auto'>
                 <div className='w-20 h-20 text-xl mx-auto relative overflow-hidden rounded-full'>
@@ -127,7 +137,7 @@ const SignUp = () => {
                             Login
                         </button>
                 </form>
-                <p className='my-5'>Don`t have account ? <Link className=' text-red-500 hover:text-red-600 hover:underline' to = {'/sign-up'}>Sing Up</Link></p>
+                <p className='my-5'>Already have account ? <Link className=' text-red-500 hover:text-red-600 hover:underline' to = {'/login'}>Login</Link></p>
             </div>
         </div>
     </section>

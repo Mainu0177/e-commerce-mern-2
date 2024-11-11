@@ -1,10 +1,15 @@
 const backendDomain = 'http://localhost:4001'
 
 const SummaryApi = {
-    singUp : {
+    signUp : {
         url : `${backendDomain}/api/auth/sign-up`,
         method : 'post',
-    }
+    }, 
+    signIn : {
+        url: `${backendDomain}/api/auth/sign-in`,
+        method : 'post',
+    },
+
 }
 
-module.exports = SummaryApi;
+export default SummaryApi;
