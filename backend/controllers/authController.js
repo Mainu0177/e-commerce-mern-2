@@ -111,7 +111,7 @@ const handleSignIn = async (req, res) =>{
 
 const handleUserDetails = async (req, res) =>{
     try{
-        console.log("userId",req.userId)
+        console.log("userId", req.userId)
         const user = await userModel.findById(req.userId)
 
         res.status(200).json({
@@ -123,11 +123,82 @@ const handleUserDetails = async (req, res) =>{
 
         console.log("user",user)
 
-    }catch(err){
+    }catch(error){
         res.status(400).json({
-            message : err.message || err,
+            message : err.message || error,
             error : true,
             success : false
+        })
+    }
+}
+
+const handleUserLogOut = async (req, res, next) =>{
+    try {
+        res.clearCookie("token")
+
+        res.json({
+            data : [],
+            message : "Log out successfully",
+            error : false,
+            success : true,
+            
+        })
+    } catch (error) {
+        res.json({
+            message : error.message || error  ,
+            error : true,
+            success : false,
+        })
+    }
+}
+
+const handleAllUser = async(req, res, next) =>{
+    try {
+        console.log('all users', req.userId);
+
+        const allUsers = await userModel.find()
+        res.json({
+            message : 'all users',
+            data : allUsers,
+            success : true,
+            error : false,
+        })
+    } catch (error) {
+        res.json({
+            message : error.message || error  ,
+            error : true,
+            success : false,
+        })
+    }
+}
+
+const handleUpdateUser = async (req, res, next) =>{
+    try {
+        const sessionUser = req.userId
+        const {userId, email, name, role} = req.body;
+
+        const payload = {
+            ...( email && {email : email}),
+            ...( name && {name : name}),
+            ...( role && {role : role}),
+        }
+
+        const user = await userModel.findById(sessionUser)
+        console.log("user role", user)
+
+        const updateUser = await userModel.findByIdAndUpdate(userId, payload);
+
+        res.json({
+            data : updateUser,
+            message : "User updated",
+            success : true, 
+            error : false,
+        })
+    } catch (error) {
+        res.json({
+            message : error.message || error  ,
+            error : true,
+            success : false,
         })
     }
 }
@@ -136,5 +207,7 @@ module.exports = {
     handleSignUp,
     handleSignIn,
     handleUserDetails,
-    
+    handleUserLogOut,
+    handleAllUser,
+    handleUpdateUser
 }

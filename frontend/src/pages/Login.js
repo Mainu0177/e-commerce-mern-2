@@ -28,6 +28,7 @@ const Login = () => {
             }
         })
     }
+
     const handleSubmit = async (e) =>{
         e.preventDefault()
 
@@ -52,7 +53,7 @@ const Login = () => {
             toast.error(dataApi.message)
         }
     }
-    console.log('data login', data)
+
     return (
     <section id ='login' className=''>
         <div className='mx-auto container p-4'>

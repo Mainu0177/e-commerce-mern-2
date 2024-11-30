@@ -30,17 +30,13 @@ function App() {
     if(dataApi.success){
       dispatch(setUserDetails(dataApi.data))
     }
-
-  console.log(dataResponse);
-  
   }
-
 
   useEffect(() =>{
     // user details
     fetchUserDetails()
 
-  })
+  },[])
 
   return (
     <>

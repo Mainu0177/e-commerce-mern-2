@@ -1,18 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Logo from './Logo'
 
 import { GrSearch } from "react-icons/gr";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import SummaryApi from '../common/urlIntigration';
+import { toast } from 'react-toastify';
+import { setUserDetails } from '../store/userSlice';
+import ROLE from '../common/role';
 
 
 const Header = () => {
-  const user = useSelector(state => state?.user?.user);
-  console.log(user)
+  const user = useSelector(state => state?.user?.user)
+
+  const [menuDisplay, setMenuDisplay] = useState(false)
+
+  const dispatch = useDispatch()
+
+  const handleLogOut = async () =>{
+    const fetchData = await fetch(SummaryApi.logout_user.url,{
+      method : SummaryApi.logout_user.method,
+      credentials : 'include'
+    })
+
+    const data = await fetchData.json()
+    
+    if(data.success){
+      toast.success(data.message);
+      dispatch(setUserDetails(null))
+    }
+    if(data.error){
+      toast.error(data.message)
+    }
+  }
   return (
-    <header className='h-16 shadow-md bg-white'>
+    <header className='h-16 shadow-md bg-white fixed w-full z-40'>
         <div className="h-full container mx-auto flex items-center px-4 justify-between">
             <div className="">
                 <Link to='/'>
@@ -28,13 +52,33 @@ const Header = () => {
             </div>
 
             <div className='items-center flex gap-7'>
-              <div className='text-3xl cursor-pointer'>
+              <div className='relative flex justify-center'>
                 {
-                  user?.profilePic ? (
-                    <img src={user?.profilePic} className='w-10 h-10 rounded-full' alt={user?.name} />
-                  ) : (
-                  <FaRegCircleUser />
-                )
+                  user?._id && (
+                    <div className='text-3xl cursor-pointer relative flex justify-center' onClick={()=> setMenuDisplay(preve => !preve)}>
+                  {
+                    user?.profilePic ? (
+                      <img src={user?.profilePic} className='w-10 h-10 rounded-full' alt={user?.name} />
+                    ) : (
+                      <FaRegCircleUser />
+                    )
+                  }
+                    </div>
+                  )
+                }
+
+                {
+                  menuDisplay && (
+                    <div className='absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded'>
+                      <nav>
+                        {
+                          user?.role === ROLE.ADMIN && (
+                            <Link to={'/admin-panel/all-products'} className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2' onClick={()=> setMenuDisplay(preve => !preve)}>Admin Panel</Link>
+                          )
+                        }
+                      </nav>
+                    </div>
+                  )
                 }
               </div>
               <div className='text-2xl cursor-pointer relative'>
@@ -46,7 +90,12 @@ const Header = () => {
                   </div>
               </div>
               <div>
-              <Link to='/login' className='bg-red-600 text-white rounded-full px-3 py-1 hover:bg-red-700'>Login</Link>
+                {
+                  user?._id ? (<button onClick={handleLogOut} className='bg-red-600 text-white rounded-full px-3 py-1 hover:bg-red-700'>Log Out</button>)
+                  :
+                  (<Link to='/login' className='bg-red-600 text-white rounded-full px-3 py-1 hover:bg-red-700'>Login</Link>)
+                }
+              
             </div>
             </div>
         </div>
