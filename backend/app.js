@@ -8,6 +8,7 @@ require('dotenv').config()
 
 const { errorResponse } = require('./helpers/responseController');
 const authRouter = require('./routers/authRouter');
+const productRouter = require('./routers/productRouter')
 
 const app = express();
 
@@ -22,6 +23,9 @@ app.use(express.urlencoded({extended: true}));
 
 // auth router
 app.use('/api/auth', authRouter)
+
+// product router
+app.use('/api/product', productRouter)
 
 
 

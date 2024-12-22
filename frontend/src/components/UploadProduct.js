@@ -7,9 +7,10 @@ import { MdDelete } from "react-icons/md";
 import productCategory from '../helpers/productCategory';
 import uploadImage from '../helpers/uploadImage';
 import DisplayImage from './DisplayImage';
+import SummaryApi from '../common/urlIntigration';
 
 
-const UploadProduct = ({onClose}) => {
+const UploadProduct = ({onClose, fetchData}) => {
   const [data, setData] = useState({
     productName : "",
     brandName : "",
@@ -17,7 +18,7 @@ const UploadProduct = ({onClose}) => {
     productImage : [],
     description : "",
     price : "",
-    selling : "",
+    sellingPrice : "",
   })
   const [openFullScreenImage,setOpenFullScreenImage] = useState(false)
   const [fullScreenImage,setFullScreenImage] = useState("")
@@ -62,28 +63,28 @@ const UploadProduct = ({onClose}) => {
   // {/**upload product */}
   const handleSubmit = async(e) =>{
     e.preventDefault()
-    
-    // const response = await fetch(SummaryApi.uploadProduct.url,{
-    //   method : SummaryApi.uploadProduct.method,
-    //   credentials : 'include',
-    //   headers : {
-    //     "content-type" : "application/json"
-    //   },
-    //   body : JSON.stringify(data)
-    // })
 
-    // const responseData = await response.json()
+    const response = await fetch(SummaryApi.upload_product.url,{
+      method : SummaryApi.upload_product.method,
+      credentials : 'include',
+      headers : {
+        "content-type" : "application/json"
+      },
+      body : JSON.stringify(data)
+    })
 
-    // if(responseData.success){
-    //     toast.success(responseData?.message)
-    //     onClose()
-    //     fetchData()
-    // }
+    const responseData = await response.json()
+
+    if(responseData.success){
+        toast.success(responseData?.message)
+        onClose()
+        fetchData()
+    }
 
 
-    // if(responseData.error){
-    //   toast.error(responseData?.message)
-    // }
+    if(responseData.error){
+      toast.error(responseData?.message)
+    }
   
 
   }
