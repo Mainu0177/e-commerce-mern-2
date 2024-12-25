@@ -11,8 +11,9 @@ import DisplayImage from './DisplayImage';
 import SummaryApi from '../common/urlIntigration';
 
 
-const AdminEditProduct = ({onClose,productData}) => {
+const AdminEditProduct = ({onClose,productData, fetchdata}) => {
     const [data, setData] = useState({
+        ...productData,
         productName : productData?.productName,
         brandName : productData?.brandName,
         category : productData?.category,
@@ -79,7 +80,7 @@ const AdminEditProduct = ({onClose,productData}) => {
             if(responseData.success){
                 toast.success(responseData?.message)
                 onClose()
-                fetchData()
+                fetchdata()
             }
         
         
@@ -218,7 +219,7 @@ const AdminEditProduct = ({onClose,productData}) => {
                 >
                 </textarea>
 
-                <button className='px-3 py-2 bg-red-600 text-white mb-10 hover:bg-red-700 rounded'>Upload Product</button>
+                <button className='px-3 py-2 bg-red-600 text-white mb-10 hover:bg-red-700 rounded'>Update Product</button>
             </form>
 
         </div>

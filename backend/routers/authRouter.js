@@ -7,7 +7,7 @@ const {
     handleUserLogOut,
     handleAllUser,
     handleUpdateUser,
-    } = require('../controllers/authController');
+    } = require('../controllers/user/authController');
 const authToken = require('../middlewares/authToken');
 
 

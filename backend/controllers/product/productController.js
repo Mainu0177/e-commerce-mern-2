@@ -1,6 +1,6 @@
 
-const uploadProductPermission = require('../helpers/permission')
-const productModel = require('../models/productModel')
+const uploadProductPermission = require('../../helpers/permission')
+const productModel = require('../../models/productModel')
 
 
 const uploadProduct = async (req, res, next) =>{
@@ -31,7 +31,7 @@ const uploadProduct = async (req, res, next) =>{
 
 const handleUpdateProduct = async (req, res, next) =>{
     try{
-        if(uploadProductPermission(req.userId)){
+        if(!uploadProductPermission(req.userId)){
             throw new Error("Permission denied")
         }
         const { _id, ...resBody} = req.body
