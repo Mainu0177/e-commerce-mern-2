@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FaStar } from "react-icons/fa";
 import { FaStarHalfAlt } from "react-icons/fa";
 
 import SummeryApi from '../common/urlIntigration'
 import displayBDTCurrency from '../helpers/displayeCurrency';
+import VarticalCardProduct from '../components/VarticalCardProduct';
 
 const ProductDetail = () => {
   const [data, setData] = useState({
@@ -24,6 +25,8 @@ const ProductDetail = () => {
     x : 0,
     y : 0,
   })
+
+  const [zoomImage, setZoomImage] = useState(false)
 
   const params = useParams();
 
@@ -56,8 +59,21 @@ const ProductDetail = () => {
     setActiveImage(imageURL)
   }
 
-  const handleZoomImage = (e) =>{
-    const {left, top, width, height } = e.target.getBoundingClient
+  const handleZoomImage = useCallback((e) =>{
+  setZoomImage(true)
+    const {left, top, width, height } = e.target.getBoundingClient();
+    console.log("coordinate", left, top, height, width)
+
+    const x = (e.clientX - left) / width
+    const y = (e.clientY - top) / height
+    
+    setZoomImageCoordinate({
+      x, y
+    })
+  },[zoomImageCoordinate])
+
+  const handleZoomLeaveImage = () =>{
+    setZoomImage(false)
   }
 
   return (
@@ -67,14 +83,24 @@ const ProductDetail = () => {
         {/* proudct image */}
         <div className='h-86 flex flex-col lg:flex-row-reverse gap-4'>
           <div className='h-[300px] w-[300px] lg:h-96 lg:w-96 bg-white'>
-            <img src={activeImage} alt='' className='h-full w-full object-scale-down mix-blend-multiply' />
+            <img src={activeImage} alt='' className='h-full w-full object-scale-down mix-blend-multiply' onMouseMove={handleZoomImage} onMouseLeave={handleZoomLeaveImage} />
 
             {/* product zoom */}
-            <div className='hidden lg:block absolute min-h-[400px] min-w-[400px] bg-slate-200 p-1 -right-[410px] top-0'>
-              <div className='w-full h-full mix-blend-multiply min-w-[400px] min-h-[400px]' style={{backgroundImage : `url(${activeImage})`, backgroundRepeat : 'no-repeat'}} >
-
+            {
+            zoomImage && (
+              <div className='hidden lg:block absolute min-h-[400px] min-w-[400px] overflow-hidden bg-slate-200 p-1 -right-[510px] top-0'>
+                <div
+                className='w-full h-full mix-blend-multiply min-w-[500px] min-h-[400px] scale-125'
+                style={{
+                  backgroundImage : `url(${activeImage})`,
+                  backgroundRepeat : 'no-repeat',
+                  backgroundPosition : `${zoomImageCoordinate.x * 100}% ${zoomImageCoordinate.y * 100}%`
+                  }}
+                >
+                </div>
               </div>
-            </div>
+              )
+            }
 
           </div>
           <div className='h-full'>
@@ -170,6 +196,15 @@ const ProductDetail = () => {
         }
 
       </div>
+
+      {
+        data.category && (
+          <VarticalCardProduct category={data?.category} heading="Recommended Product" />
+        )
+      }
+
+
+
     </div>
   )
 }

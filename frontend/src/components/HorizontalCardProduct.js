@@ -3,6 +3,7 @@ import fetchCategoryWiseProduct from '../helpers/fetchCategoryWiseProduct';
 import displayBDTCurrency from '../helpers/displayeCurrency';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6';
 import addToCart from '../helpers/addToCart';
+import { Link } from 'react-router-dom';
 
 const HorizontalCardProduct = ({category, heading}) => {
     const [data, setData] = useState([]);
@@ -65,7 +66,7 @@ const HorizontalCardProduct = ({category, heading}) => {
                 ) : (
                     data.map((product, index) =>{
                         return (
-                            <div className='w-full mix-w-[280px] md:min-w-[320px] max-w-[280px] md:man-w-[320px] h-36 bg-white rounded-sm shadow flex'>
+                            <Link to={"product/"+product?._id} className='w-full mix-w-[280px] md:min-w-[320px] max-w-[280px] md:man-w-[320px] h-36 bg-white rounded-sm shadow flex'>
                                 <div className='bg-slate-200 h-full p-2 min-w-[120px] md:min-w-[145px]'>
                                     <img src={product.productImage[0]} alt='category' className='object-scale-down h-full hover:scale-110 transition-all' />
                                 </div>
@@ -79,7 +80,7 @@ const HorizontalCardProduct = ({category, heading}) => {
                                     </div>
                                     <button className='bg-red-500 hover:bg-red-700 text-white px-3 py-1 rounded-full' onClick={(e) => addToCart(e, product?._id)}>Add to Cart</button>
                                 </div>
-                            </div>
+                            </Link>
                         )
                     })
                 )
