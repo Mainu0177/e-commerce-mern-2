@@ -18,7 +18,12 @@ const ProductDetail = () => {
   })
   const [loading, setLoading] = useState(true);
   const productImageListLoading = new Array(4).fill(null);
-  const [activeImage, setActiveImage] = useState("")
+  const [activeImage, setActiveImage] = useState("");
+
+  const [zoomImageCoordinate, setZoomImageCoordinate] = useState({
+    x : 0,
+    y : 0,
+  })
 
   const params = useParams();
 
@@ -50,6 +55,11 @@ const ProductDetail = () => {
   const handleMouseEnterProduct = (imageURL) =>{
     setActiveImage(imageURL)
   }
+
+  const handleZoomImage = (e) =>{
+    const {left, top, width, height } = e.target.getBoundingClient
+  }
+
   return (
     <div className='container mx-autop-4'>
       <div className='min-h-[200px] flex flex-col lg:flex-row gap-4'>
@@ -60,8 +70,10 @@ const ProductDetail = () => {
             <img src={activeImage} alt='' className='h-full w-full object-scale-down mix-blend-multiply' />
 
             {/* product zoom */}
-            <div>
-              
+            <div className='hidden lg:block absolute min-h-[400px] min-w-[400px] bg-slate-200 p-1 -right-[410px] top-0'>
+              <div className='w-full h-full mix-blend-multiply min-w-[400px] min-h-[400px]' style={{backgroundImage : `url(${activeImage})`, backgroundRepeat : 'no-repeat'}} >
+
+              </div>
             </div>
 
           </div>
