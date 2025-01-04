@@ -6,6 +6,7 @@ import { FaStarHalfAlt } from "react-icons/fa";
 import SummeryApi from '../common/urlIntigration'
 import displayBDTCurrency from '../helpers/displayeCurrency';
 import VarticalCardProduct from '../components/VarticalCardProduct';
+import CategoryWiseProductDisplay from '../components/CategoryWiseProductdisplay';
 
 const ProductDetail = () => {
   const [data, setData] = useState({
@@ -82,7 +83,7 @@ const ProductDetail = () => {
         
         {/* proudct image */}
         <div className='h-86 flex flex-col lg:flex-row-reverse gap-4'>
-          <div className='h-[300px] w-[300px] lg:h-96 lg:w-96 bg-white'>
+          <div className='h-[300px] w-[300px] lg:h-96 lg:w-96 bg-slate-200 relative p-2'>
             <img src={activeImage} alt='' className='h-full w-full object-scale-down mix-blend-multiply' onMouseMove={handleZoomImage} onMouseLeave={handleZoomLeaveImage} />
 
             {/* product zoom */}
@@ -199,7 +200,7 @@ const ProductDetail = () => {
 
       {
         data.category && (
-          <VarticalCardProduct category={data?.category} heading="Recommended Product" />
+          <CategoryWiseProductDisplay category={data?.category} heading="Recommended Product" />
         )
       }
 
