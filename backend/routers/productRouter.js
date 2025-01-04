@@ -5,6 +5,7 @@ const { getCatagoryProduct } = require('../controllers/product/getCategoryProduc
 const getCategoryWiseProduct = require('../controllers/product/getCategoryWiseProduct');
 const getProductDetails = require('../controllers/product/getProductDetails');
 const {uploadProduct, getAllProduct, handleUpdateProduct} = require('../controllers/product/productController');
+const addToCartController = require('../controllers/user/addToCartController');
 const authToken = require('../middlewares/authToken');
 
 
@@ -17,6 +18,9 @@ productRouter.post('/updateProduct', authToken, handleUpdateProduct);
 // product category router
 productRouter.get('/get-categoryProduct', getCatagoryProduct);
 productRouter.post('/category-product', getCategoryWiseProduct);
-productRouter.post('/product-details', getProductDetails)
+productRouter.post('/product-details', getProductDetails);
+
+// user add to cart
+productRouter.post('/addtocart',authToken, addToCartController)
 
 module.exports = productRouter
