@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import SummaryApi from './common/urlIntigration';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Context from './context/context';
 import { useDispatch } from 'react-redux';
 import { setUserDetails } from './store/userSlice';
@@ -17,6 +17,8 @@ import { setUserDetails } from './store/userSlice';
 
 function App() {
   const dispatch = useDispatch();
+
+  const [cartProductCount, setCartProductCount] = useState(0)
 
 
   const fetchUserDetails = async () =>{
@@ -32,9 +34,23 @@ function App() {
     }
   }
 
+  const fetchUserAddToCart = async () =>{
+    const dataResponse = await fetch(SummaryApi.addToCartProductCount.url,{
+      method : SummaryApi.addToCartProductCount.method,
+      credentials : 'include'
+    })
+
+    const dataApi = await dataResponse.json()
+
+    console.log(dataApi)
+    setCartProductCount(dataApi?.data?.count)
+  }
+
   useEffect(() =>{
     // user details
     fetchUserDetails()
+    // user Cart products
+    fetchUserAddToCart()
 
   },[])
 
@@ -42,6 +58,9 @@ function App() {
     <>
     <Context.Provider value = {{
       fetchUserDetails, // user detail fetch
+      cartProductCount,
+      fetchUserAddToCart, // current user add to product count
+
       
     }} >
 

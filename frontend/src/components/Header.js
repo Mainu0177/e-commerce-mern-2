@@ -5,18 +5,21 @@ import { GrSearch } from "react-icons/gr";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SummaryApi from '../common/urlIntigration';
 import { toast } from 'react-toastify';
 import { setUserDetails } from '../store/userSlice';
 import ROLE from '../common/role';
+import Context from '../context/context';
 
 
 const Header = () => {
   const user = useSelector(state => state?.user?.user)
 
   const [menuDisplay, setMenuDisplay] = useState(false)
-
+  
+  const context = useContext(Context)
   const dispatch = useDispatch()
 
   const handleLogOut = async () =>{
@@ -35,6 +38,8 @@ const Header = () => {
       toast.error(data.message)
     }
   }
+
+  console.log("header add to cart count", context)
   return (
     <header className='h-16 shadow-md bg-white fixed w-full z-40'>
         <div className="h-full container mx-auto flex items-center px-4 justify-between">
@@ -81,14 +86,20 @@ const Header = () => {
                   )
                 }
               </div>
-              <div className='text-2xl cursor-pointer relative'>
-                <span className=''>
-                  <FaShoppingCart />
-                </span>
-                  <div className='bg-red-600 text-white w-5 h-5 rounded-full p-1 flex items-center justify-center absolute -top-2 -right-4'>
-                    <p className='text-sm'>0</p>
+
+              {
+                user?._id && (
+                  <div className='text-2xl cursor-pointer relative'>
+                      <span className=''>
+                        <FaShoppingCart />
+                      </span>
+                    <div className='bg-red-600 text-white w-5 h-5 rounded-full p-1 flex items-center justify-center absolute -top-2 -right-4'>
+                      <p className='text-sm'>{context.cartProductCount}</p>
+                    </div>
                   </div>
-              </div>
+                )
+              }
+
               <div>
                 {
                   user?._id ? (<button onClick={handleLogOut} className='bg-red-600 text-white rounded-full px-3 py-1 hover:bg-red-700'>Log Out</button>)

@@ -6,7 +6,7 @@ const productCountController = async (req, res) =>{
     try {
         const userId = req.userId
 
-        const count = await addToCartModel.countDocument({
+        const count = await addToCartModel.countDocuments({
             userId : userId
         })
 
