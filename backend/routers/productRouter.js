@@ -7,6 +7,7 @@ const getProductDetails = require('../controllers/product/getProductDetails');
 const {uploadProduct, getAllProduct, handleUpdateProduct} = require('../controllers/product/productController');
 const addToCartController = require('../controllers/user/addToCartController');
 const addToCartViewProduct = require('../controllers/user/addToCartViewProduct');
+const deleteAddToCartProduct = require('../controllers/user/deleteAddToCartProduct');
 const productCountController = require('../controllers/user/productCountController');
 const updateAddToCartProduct = require('../controllers/user/updateAddToCartProduct')
 const authToken = require('../middlewares/authToken');
@@ -27,6 +28,7 @@ productRouter.post('/product-details', getProductDetails);
 productRouter.post('/addtocart',authToken, addToCartController);
 productRouter.get('/productCount', authToken, productCountController);
 productRouter.get('/view-cart-product', authToken, addToCartViewProduct);
-productRouter.post('/update-cart-product', authToken, updateAddToCartProduct)
+productRouter.post('/update-cart-product', authToken, updateAddToCartProduct);
+productRouter.post('/delete-cart-product', authToken, deleteAddToCartProduct)
 
 module.exports = productRouter

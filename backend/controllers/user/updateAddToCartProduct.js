@@ -1,17 +1,17 @@
-const { model } = require("mongoose")
+
 const addToCartModel = require("../../models/cartProduct")
 
 
 
 const updateAddToCartProduct = async (req, res) =>{
     try {
-        const currenUserId = req.userId
+        const currentUserId = req.userId
         const addToCartProductId = req?.body?._id
 
         const qty = req.body.quantity
 
         const updateProduct = await addToCartModel.updateOne({ _id : addToCartProductId },{
-            userId : currenUserId,
+            userId : currentUserId,
             ...(qty && {quantity : qty})
         })
 

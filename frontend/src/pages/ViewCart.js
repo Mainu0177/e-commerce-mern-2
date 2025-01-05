@@ -81,6 +81,29 @@ const ViewCart = () => {
         }
     }
 
+    const deleteCartProduct = async (id) =>{
+        const response = await fetch(SummaryApi.deleteCartProduct.url,{
+            method : SummaryApi.deleteCartProduct.method,
+            credentials : 'include',
+            headers : {
+                'Content-Type' : 'application/json'
+            },
+            body : JSON.stringify(
+                {
+                    _id : id,
+                }
+            )
+        })
+        const responseData = await response.json()
+
+        if(responseData.success){
+            fetchData()
+            context.fetchUserAddToCart()
+        }
+    }
+
+    // const totalQty
+
   return (
     <div className='container mx-auto'>
         <div className='text-center text-lg  my-3'>
@@ -111,7 +134,7 @@ const ViewCart = () => {
                                 </div>
                                 <div className='px-4 py-2 relative'>    
                                     {/* delete product */}
-                                    <div className='absolute right-0 text-red-600 rounded-full p-2 hover:bg-red-600 hover:text-white cursor-pointer'>
+                                    <div className='absolute right-0 text-red-600 rounded-full p-2 hover:bg-red-600 hover:text-white cursor-pointer' onClick={()=> deleteCartProduct(product?._id)}>
                                         <MdDelete />
                                     </div>
 
@@ -139,8 +162,12 @@ const ViewCart = () => {
 
                         </div>
                     ) : (
-                        <div>
-
+                        <div className='h-36 bg-white'>
+                            <h2 className='text-white bg-red-600 px-4 py-1'>Summary</h2>
+                            <div className=''>
+                                <p>Quantity</p>
+                                <p></p>
+                            </div>
                         </div>
                     )
                 }
