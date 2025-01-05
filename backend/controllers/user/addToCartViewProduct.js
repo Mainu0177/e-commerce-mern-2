@@ -18,7 +18,7 @@ const addToCartViewProduct = async (req, res) =>{
 
     } catch (error) {
         res.json({
-            message : error.message ||error,
+            message : error.message || error,
             error : true, 
             success : false,
         })

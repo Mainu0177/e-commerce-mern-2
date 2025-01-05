@@ -8,6 +8,7 @@ const {uploadProduct, getAllProduct, handleUpdateProduct} = require('../controll
 const addToCartController = require('../controllers/user/addToCartController');
 const addToCartViewProduct = require('../controllers/user/addToCartViewProduct');
 const productCountController = require('../controllers/user/productCountController');
+const updateAddToCartProduct = require('../controllers/user/updateAddToCartProduct')
 const authToken = require('../middlewares/authToken');
 
 
@@ -24,7 +25,8 @@ productRouter.post('/product-details', getProductDetails);
 
 // user add to cart
 productRouter.post('/addtocart',authToken, addToCartController);
-productRouter.get('/productCount', authToken, productCountController)
-productRouter.get('/view-cart-product', authToken, addToCartViewProduct)
+productRouter.get('/productCount', authToken, productCountController);
+productRouter.get('/view-cart-product', authToken, addToCartViewProduct);
+productRouter.post('/update-cart-product', authToken, updateAddToCartProduct)
 
 module.exports = productRouter
