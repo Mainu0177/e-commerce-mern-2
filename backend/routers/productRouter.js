@@ -5,6 +5,7 @@ const { getCatagoryProduct } = require('../controllers/product/getCategoryProduc
 const getCategoryWiseProduct = require('../controllers/product/getCategoryWiseProduct');
 const getProductDetails = require('../controllers/product/getProductDetails');
 const {uploadProduct, getAllProduct, handleUpdateProduct} = require('../controllers/product/productController');
+const searchProduct = require('../controllers/product/searchProduct');
 const addToCartController = require('../controllers/user/addToCartController');
 const addToCartViewProduct = require('../controllers/user/addToCartViewProduct');
 const deleteAddToCartProduct = require('../controllers/user/deleteAddToCartProduct');
@@ -23,6 +24,7 @@ productRouter.post('/updateProduct', authToken, handleUpdateProduct);
 productRouter.get('/get-categoryProduct', getCatagoryProduct);
 productRouter.post('/category-product', getCategoryWiseProduct);
 productRouter.post('/product-details', getProductDetails);
+productRouter.get('/searchProduct', searchProduct);
 
 // user add to cart
 productRouter.post('/addtocart',authToken, addToCartController);

@@ -11,6 +11,7 @@ import AllProducts from '../pages/AllProducts';
 import CategoryProduct from '../pages/CategoryProduct';
 import ProductDetail from '../pages/ProductDetail';
 import ViewCart from '../pages/ViewCart';
+import SearchProduct from '../pages/SearchProduct';
 
 const router = createBrowserRouter([
     {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
             {
                 path : 'view-cart',
                 element : <ViewCart />
+            },
+            {
+                path : 'search',
+                element : <SearchProduct />
             },
             {
                 path : 'admin-panel/:id',
