@@ -102,7 +102,8 @@ const ViewCart = () => {
         }
     }
 
-    // const totalQty
+    const totalQty = data.reduce((previousValue, currentVAlue) => previousValue + currentVAlue.quantity, 0)
+    const totaPlrice = data.reduce((preve,curr) => preve + (curr.quantity * curr?.productId?.sellingPrice), 0)
 
   return (
     <div className='container mx-auto'>
@@ -140,7 +141,10 @@ const ViewCart = () => {
 
                                     <h2 className='text-lg lg:text-2xl text-ellipsis line-clamp-1'>{product?.productId?.prodductName}</h2>
                                     <p className='capitalize text-slate-500 '>{product?.productId.category}</p>
-                                    <p className='text-red-600 font-medium text-lg'>{displayBDTCurrency(product?.productId?.sellingPrice)}</p>
+                                    <div className='flex items-center justify-between'>
+                                        <p className='text-red-600 font-medium text-lg'>{displayBDTCurrency(product?.productId?.sellingPrice)}</p>
+                                        <p className='text-slate-600 font-semibold text-lg'>{displayBDTCurrency(product?.productId?.sellingPrice * product?.quantity)}</p>
+                                    </div>
                                     <div className='flex items-center gap-3 mt-1'>
                                         <button className='flex justify-center items-center rounded hover:bg-red-600 hover:text-white border-red-600 border text-red-600 w-6 h-6' onClick={()=> decreaseQty(product?._id, product?.quantity)}>-</button>
                                         <span>{product?.quantity}</span>
@@ -164,10 +168,15 @@ const ViewCart = () => {
                     ) : (
                         <div className='h-36 bg-white'>
                             <h2 className='text-white bg-red-600 px-4 py-1'>Summary</h2>
-                            <div className=''>
+                            <div className='flex items-center justify-between px-4 gap-2 font-medium text-lg text-slate-600'>
                                 <p>Quantity</p>
-                                <p></p>
+                                <p>{totalQty}</p>
                             </div>
+                            <div className='flex items-center justify-between px-4 gap-2 font-medium text-lg text-slate-600'>
+                                <p>Total Price</p>
+                                <p>{displayBDTCurrency(totaPlrice)}</p>
+                            </div>
+                            <button className='bg-blue-600 p-2 text-white w-full rounded'>Payment</button>
                         </div>
                     )
                 }
