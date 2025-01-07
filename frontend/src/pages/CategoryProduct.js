@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import productCategory from '../helpers/productCategory'
 // import CategoryWiseProductDisplay from '../components/CategoryWiseProductDisplay'
 import VerticalCart from '../components/VerticalCart'
@@ -10,9 +10,18 @@ const CategoryProduct = () => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false);
     const location = useLocation()
+    const navigate = useNavigate()
+    const URLCategory = new URLSearchParams(location.search)
+    const urlCategoryListinArry = URLCategory.getAll('category')
 
+    const urlCategoryListObeject = {}
+    urlCategoryListinArry.forEach(el =>{
+      urlCategoryListObeject[el] = true
+    })
+    console.log('url category list object', urlCategoryListObeject)
+    console.log("url Category list array", urlCategoryListinArry)
 
-    const [selectCategory, setSelectCategory] = useState({})
+    const [selectCategory, setSelectCategory] = useState(urlCategoryListObeject)
     const [filterCategoryList, setFilterCategoryList] = useState([])
 
     const fetchData = async () =>{
@@ -51,15 +60,25 @@ const CategoryProduct = () => {
     }
 
     useEffect(() =>{
-      const arryOfCategory = Object.keys(selectCategory).map(categoryName =>{
+      const arrayOfCategory = Object.keys(selectCategory).map(categoryName =>{
         if(selectCategory[categoryName]){
           return categoryName
         }
         return null
       }).filter(el => el)
-      setFilterCategoryList(arryOfCategory)
+      setFilterCategoryList(arrayOfCategory)
 
-      console.log(arryOfCategory)
+      console.log(arrayOfCategory)
+
+      // format for url change when change on the checkbox
+      const urlFormat = arrayOfCategory.map((el,index) =>{
+        if((arrayOfCategory.length -1 ) === index){
+          return `category=${el}`
+        }
+        return `category=${el}&&`
+      })
+      console.log('url Formate', urlFormat.join(''))
+      navigate('/product-category?'+urlFormat.join(''))
     },[selectCategory])
   return (
     <div className='container mx-auto'>
@@ -103,17 +122,21 @@ const CategoryProduct = () => {
             </div>
           </div>
           {/* right side */}
-          <div>
+          <div className='px-4'>
             {/* {
               params?.categoryName && (
                 <CategoryWiseProductDisplay category={params?.categoryName} heading={'Recommended Product'} />
               )
             } */}
-            {
-              data.length !== 0 && !loading && (
-                <VerticalCart data={data} loading={loading} />
-              )
-            }
+            <p className='font-medium text-slate-800 text-lg my-2'>Search Result : {data.length}</p>
+            <div className='min-h-[calc(100vh-120px)] overflow-y-scroll max-h-[calc(100vh-120px)]'>              
+              {
+                data.length !== 0 && !loading && (
+                  <VerticalCart data={data} loading={loading} />
+                )
+              }
+            </div>
+
           </div>
         </div>
     </div>
