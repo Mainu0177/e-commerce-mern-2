@@ -1,6 +1,7 @@
 const productRouter = require('express').Router();
 
 
+const filterProductController = require('../controllers/product/filterProduct');
 const { getCatagoryProduct } = require('../controllers/product/getCategoryProduct');
 const getCategoryWiseProduct = require('../controllers/product/getCategoryWiseProduct');
 const getProductDetails = require('../controllers/product/getProductDetails');
@@ -25,6 +26,7 @@ productRouter.get('/get-categoryProduct', getCatagoryProduct);
 productRouter.post('/category-product', getCategoryWiseProduct);
 productRouter.post('/product-details', getProductDetails);
 productRouter.get('/searchProduct', searchProduct);
+productRouter.post('/filter-product', filterProductController)
 
 // user add to cart
 productRouter.post('/addtocart',authToken, addToCartController);

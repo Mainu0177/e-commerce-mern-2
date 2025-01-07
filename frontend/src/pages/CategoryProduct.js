@@ -1,27 +1,66 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import productCategory from '../helpers/productCategory'
-import CategoryWiseProductDisplay from '../components/CategoryWiseProductDisplay'
+// import CategoryWiseProductDisplay from '../components/CategoryWiseProductDisplay'
+import VerticalCart from '../components/VerticalCart'
+import SummaryApi from '../common/urlIntigration'
 
 const CategoryProduct = () => {
     const params = useParams();
     const [data, setData] = useState([])
-    const [loadin, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const location = useLocation()
+
+
+    const [selectCategory, setSelectCategory] = useState({})
+    const [filterCategoryList, setFilterCategoryList] = useState([])
 
     const fetchData = async () =>{
       setLoading(true)
-      const response = await fetch()
+      const response = await fetch(SummaryApi.filterProduct.url,{
+        method : SummaryApi.filterProduct.method,
+        credentials : 'include',
+        headers : {
+          'Content-Type' : 'application/json'
+        },
+        body : JSON.stringify({
+          category : filterCategoryList
+        })
+      })
       const dataResponse = await response.json()
 
       setData(dataResponse?.data || [])
       console.log(dataResponse)
     }
 
-    // console.log("", params?.categoryName)
-
     useEffect(() =>{
       fetchData()
-    },[])
+    },[filterCategoryList])
+
+    // console.log("", params?.categoryName)
+
+    const handleSelectCategory = (e) =>{
+      const { name, value, checked } = e.target
+      setSelectCategory((preve) =>{
+        return {
+          ...preve,
+          [value] : checked
+        }
+      })
+      console.log("Select Category", name, value, checked)
+    }
+
+    useEffect(() =>{
+      const arryOfCategory = Object.keys(selectCategory).map(categoryName =>{
+        if(selectCategory[categoryName]){
+          return categoryName
+        }
+        return null
+      }).filter(el => el)
+      setFilterCategoryList(arryOfCategory)
+
+      console.log(arryOfCategory)
+    },[selectCategory])
   return (
     <div className='container mx-auto'>
         {/* desktop sersion */}
@@ -54,7 +93,7 @@ const CategoryProduct = () => {
                   productCategory.map((categoryName, index) =>{
                     return (
                       <div className='flex items-center gap-3'>
-                        <input type='checkbox' name={'category'} id={categoryName?.value} />
+                        <input type='checkbox' name={'category'} checked={selectCategory[categoryName?.value]} value={categoryName?.value} id={categoryName?.value} onChange={handleSelectCategory} />
                         <label htmlFor={categoryName?.value}>{categoryName?.label}</label>
                       </div>
                     )
@@ -65,9 +104,14 @@ const CategoryProduct = () => {
           </div>
           {/* right side */}
           <div>
-            {
+            {/* {
               params?.categoryName && (
                 <CategoryWiseProductDisplay category={params?.categoryName} heading={'Recommended Product'} />
+              )
+            } */}
+            {
+              data.length !== 0 && !loading && (
+                <VerticalCart data={data} loading={loading} />
               )
             }
           </div>
