@@ -4,7 +4,7 @@ import Logo from './Logo'
 import { GrSearch } from "react-icons/gr";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SummaryApi from '../common/urlIntigration';
@@ -22,6 +22,10 @@ const Header = () => {
   const context = useContext(Context)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const searchInput = useLocation()
+  const [search, setSearch] = useState(searchInput?.search?.split('=')[1])
+
+  console.log("search Input", searchInput?.search?.split('=')[1])
 
   const handleLogOut = async () =>{
     const fetchData = await fetch(SummaryApi.logout_user.url,{
@@ -42,6 +46,7 @@ const Header = () => {
 
   const handleSearch = async (e) =>{
     const { value } = e.target
+    setSearch(value)
 
     if(value){
       navigate(`search?q=${value}`)
@@ -61,7 +66,7 @@ const Header = () => {
             </div>
 
             <div className=' hidden lg:flex items-center w-full justify-between max-w-sm border rounded-full focus-within:shadow-md pl-2'>
-              <input type='text' placeholder='Search products here...'className='w-full outline-none' onChange={handleSearch} />
+              <input type='text' placeholder='Search products here...'className='w-full outline-none' onChange={handleSearch} value={search} />
               <div className='text-lg min-w-[50px] h-8 bg-red-600 flex justify-center items-center rounded-r-full text-white'>
                 <GrSearch />
               </div>

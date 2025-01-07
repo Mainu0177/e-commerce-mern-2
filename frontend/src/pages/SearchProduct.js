@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import SummaryApi from '../common/urlIntigration'
+import VerticalCart from '../components/VerticalCart'
 
 
 const SearchProduct = () => {
@@ -32,7 +33,7 @@ const SearchProduct = () => {
                 <p className='text-lg text-center'>Loading ...</p>
             )
         }
-        <p>Search Results : {data.length}</p>
+        <p className='text-lg font-semibold my-3'>Search Results : {data.length}</p>
 
         {
             data.length === 0 && !loading && (
@@ -42,11 +43,11 @@ const SearchProduct = () => {
 
         {
             data.length !==0 && !loading && (
-                data.map((product,index) =>{
-                    return (
-                        
-                    )
-                })
+                // data.map((product,index) =>{
+                    // return (
+                        <VerticalCart loading={loading} data={data} />
+                    // )
+                // })
             )
         }
     </div>
