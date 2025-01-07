@@ -13,7 +13,7 @@ const ViewCart = () => {
     const loadingCart = new Array(context.cartProductCount).fill(null)
 
     const fetchData = async () =>{
-        setLoading(true)
+        // setLoading(true)
         const response = await fetch(SummaryApi.addToCartViewProduct.url,{
             method : SummaryApi.addToCartViewProduct.method,
             credentials : 'include',
@@ -21,7 +21,7 @@ const ViewCart = () => {
                 'Content-Type' : 'application/json'
             },            
         })
-        setLoading(false)
+        // setLoading(false)
 
         const responseData = await response.json()
         if(responseData.success){
@@ -29,8 +29,14 @@ const ViewCart = () => {
         }
     }
 
+    const handleLoading = async () =>{
+        await fetchData()
+    }
+
     useEffect(() =>{
+        setLoading(true)
         fetchData()
+        setLoading(false)
     },[])
 
     console.log("cart data", data)
@@ -120,9 +126,9 @@ const ViewCart = () => {
             <div className='w-full max-w-3xl '>
                 {
                     loading ? (
-                        loadingCart.map(el =>{
+                        loadingCart.map((el,index) =>{
                             return (
-                                <div key={el + "Add to cart loading"} className='w-full bg-slate-200 h-32 my-2 border-slate-300 animate-pulse rounded'>
+                                <div key={el + "Add to cart loading"+index} className='w-full bg-slate-200 h-32 my-2 border-slate-300 animate-pulse rounded'>
                                 </div>
                             )
                         })

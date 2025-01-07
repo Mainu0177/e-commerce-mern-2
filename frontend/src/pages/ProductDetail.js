@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { FaStar } from "react-icons/fa";
 import { FaStarHalfAlt } from "react-icons/fa";
 
@@ -7,6 +7,8 @@ import SummeryApi from '../common/urlIntigration'
 import displayBDTCurrency from '../helpers/displayeCurrency';
 import VarticalCardProduct from '../components/VarticalCardProduct';
 import CategoryWiseProductDisplay from '../components/CategoryWiseProductdisplay';
+import addToCart from '../helpers/addToCart';
+
 
 const ProductDetail = () => {
   const [data, setData] = useState({
@@ -26,6 +28,10 @@ const ProductDetail = () => {
     x : 0,
     y : 0,
   })
+
+  const { fetchUserAddToCart } = useState(Context)
+
+  const navigate = useNavigate()
 
   const [zoomImage, setZoomImage] = useState(false)
 
@@ -77,6 +83,17 @@ const ProductDetail = () => {
     setZoomImage(false)
   }
 
+  const handleAddToCart = async (e,id) =>{
+    await addToCart(e,id)
+    fetchUserAddToCart()
+  }
+
+  const handleByProduct = async(e,id) =>{
+    await addToCart(e,id)
+    fetchUserAddToCart()
+    navigate('/cart')
+  }
+
   return (
     <div className='container mx-autop-4'>
       <div className='min-h-[200px] flex flex-col lg:flex-row gap-4'>
@@ -109,9 +126,9 @@ const ProductDetail = () => {
               loading ? (
                 <div className='flex ga-2 lg:flex-col overflow-scroll scrollbar-none h-full'>
                   {
-                    productImageListLoading.map(el =>{
+                    productImageListLoading.map((el,index) =>{
                       return (
-                        <div className='bg-slate-200 h-20 w-20 rounded animate-pulse'>
+                        <div className='bg-slate-200 h-20 w-20 rounded animate-pulse' key={'loadingImage'+index}>
 
                         </div>
                       )
@@ -184,8 +201,8 @@ const ProductDetail = () => {
             </div>
 
             <div className='flex items-center gap-3 my-2'>
-              <button className='border border-red-600 px-3 py-1 min-w-[120px] text-red-600 font-medium hover:bg-red-600 hover:text-white'>Buy</button>
-              <button className='border border-red-600 px-3 py-1 min-w-[120px] font-medium text-white bg-red-600 hover:text-red-600 hover:bg-white'>Add To Cart</button>
+              <button className='border border-red-600 px-3 py-1 min-w-[120px] text-red-600 font-medium hover:bg-red-600 hover:text-white' onClick={(e) => handleByproduct(e,data?._id)}>Buy</button>
+              <button className='border border-red-600 px-3 py-1 min-w-[120px] font-medium text-white bg-red-600 hover:text-red-600 hover:bg-white' onClick={(e) => handleAddToCart(e,data?._id)}>Add To Cart</button>
             </div>
 
             <div>
