@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import productCategory from '../helpers/productCategory'
 // import CategoryWiseProductDisplay from '../components/CategoryWiseProductDisplay'
 import VerticalCart from '../components/VerticalCart'
 import SummaryApi from '../common/urlIntigration'
 
 const CategoryProduct = () => {
-    const params = useParams();
+    // const params = useParams();
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false);
     const location = useLocation()
@@ -46,6 +46,7 @@ const CategoryProduct = () => {
 
     useEffect(() =>{
       fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[filterCategoryList])
 
     // console.log("", params?.categoryName)
@@ -81,6 +82,7 @@ const CategoryProduct = () => {
       })
       console.log('url Formate', urlFormat.join(''))
       navigate('/product-category?'+urlFormat.join(''))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[selectCategory])
 
     const handleSortBy = (e) =>{
@@ -97,7 +99,7 @@ const CategoryProduct = () => {
     }
 
     useEffect(() =>{
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sortBy])
 
   return (

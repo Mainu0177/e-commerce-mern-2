@@ -13,7 +13,7 @@ const ViewCart = () => {
     const loadingCart = new Array(context.cartProductCount).fill(null)
 
     const fetchData = async () =>{
-        // setLoading(true)
+
         const response = await fetch(SummaryApi.addToCartViewProduct.url,{
             method : SummaryApi.addToCartViewProduct.method,
             credentials : 'include',
@@ -21,7 +21,6 @@ const ViewCart = () => {
                 'Content-Type' : 'application/json'
             },            
         })
-        // setLoading(false)
 
         const responseData = await response.json()
         if(responseData.success){
@@ -35,8 +34,9 @@ const ViewCart = () => {
 
     useEffect(() =>{
         setLoading(true)
-        fetchData()
+        handleLoading()
         setLoading(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     console.log("cart data", data)

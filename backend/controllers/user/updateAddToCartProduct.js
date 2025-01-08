@@ -32,4 +32,4 @@ const updateAddToCartProduct = async (req, res) =>{
     }
 }
 
-model.export = updateAddToCartProduct;
+module.exports = updateAddToCartProduct;

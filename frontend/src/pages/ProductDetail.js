@@ -1,13 +1,14 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FaStar } from "react-icons/fa";
 import { FaStarHalfAlt } from "react-icons/fa";
 
 import SummeryApi from '../common/urlIntigration'
 import displayBDTCurrency from '../helpers/displayeCurrency';
-import VarticalCardProduct from '../components/VarticalCardProduct';
-import CategoryWiseProductDisplay from '../components/CategoryWiseProductdisplay';
+// import VarticalCardProduct from '../components/VarticalCardProduct';
+import CategoryWiseProductDisplay from '../components/CategoryWiseProductDisplay';
 import addToCart from '../helpers/addToCart';
+import Context from '../context/context';
 
 
 const ProductDetail = () => {
@@ -60,6 +61,7 @@ const ProductDetail = () => {
   console.log("data", data)
   useEffect(() =>{
     fetchProductDetails()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params])
 
   const handleMouseEnterProduct = (imageURL) =>{
@@ -77,6 +79,7 @@ const ProductDetail = () => {
     setZoomImageCoordinate({
       x, y
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[zoomImageCoordinate])
 
   const handleZoomLeaveImage = () =>{
@@ -201,7 +204,7 @@ const ProductDetail = () => {
             </div>
 
             <div className='flex items-center gap-3 my-2'>
-              <button className='border border-red-600 px-3 py-1 min-w-[120px] text-red-600 font-medium hover:bg-red-600 hover:text-white' onClick={(e) => handleByproduct(e,data?._id)}>Buy</button>
+              <button className='border border-red-600 px-3 py-1 min-w-[120px] text-red-600 font-medium hover:bg-red-600 hover:text-white' onClick={(e) => handleByProduct(e,data?._id)}>Buy</button>
               <button className='border border-red-600 px-3 py-1 min-w-[120px] font-medium text-white bg-red-600 hover:text-red-600 hover:bg-white' onClick={(e) => handleAddToCart(e,data?._id)}>Add To Cart</button>
             </div>
 

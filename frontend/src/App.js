@@ -51,7 +51,7 @@ function App() {
     fetchUserDetails()
     // user Cart products
     fetchUserAddToCart()
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
   return (

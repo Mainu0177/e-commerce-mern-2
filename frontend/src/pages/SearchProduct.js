@@ -25,6 +25,7 @@ const SearchProduct = () => {
 
     useEffect(() =>{
         fetchProduct()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[query])
   return (
     <div className='container mx-auto p-4'>
