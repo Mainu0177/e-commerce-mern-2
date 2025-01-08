@@ -27,7 +27,7 @@ const Header = () => {
   const searchQuery = URLSearch.getAll('q')
   const [search, setSearch] = useState(searchQuery)
 
-  console.log("search Input", searchInput?.search?.split('=')[1])
+  // console.log("search Input", searchInput?.search?.split('=')[1])
 
   const handleLogOut = async () =>{
     const fetchData = await fetch(SummaryApi.logout_user.url,{
