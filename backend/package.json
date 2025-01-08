@@ -19,7 +19,8 @@
     "express": "^4.21.1",
     "http-errors": "^2.0.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.8.0"
+    "mongoose": "^8.8.0",
+    "stripe": "^17.5.0"
   },
   "devDependencies": {
     "morgan": "^1.10.0",

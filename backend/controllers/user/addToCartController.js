@@ -4,9 +4,9 @@ const addToCartModel = require("../../models/cartProduct");
 const addToCartController = async (req, res) =>{
     try {
         const { productId } = req?.body;
-        const currenUser = req.userId;
+        const currentUser = req.userId;
 
-        const isProductAvailable = await addToCartModel.findOne({ productId })
+        const isProductAvailable = await addToCartModel.findOne({ productId, userId: currentUser })
         
         if(isProductAvailable){
             return res.json({
@@ -19,7 +19,7 @@ const addToCartController = async (req, res) =>{
         const payload = {
             productId : productId,
             quantity : 1,
-            userId : currenUser,
+            userId : currentUser,
         }
 
         const newAddToCart = new addToCartModel(payload)
