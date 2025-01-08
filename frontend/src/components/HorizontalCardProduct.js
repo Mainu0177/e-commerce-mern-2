@@ -52,7 +52,7 @@ const HorizontalCardProduct = ({category, heading}) => {
             <button className='bg-slate-100 rounded-full shadow-md p-1 absolute right-0 hidden md:block' onClick={scrollRight}><FaAngleRight /></button>
             {
                 loading ? (
-                    loadingList(() =>{
+                    loadingList.map(() =>{
                         return (
                             <div className='w-full mix-w-[280px] md:min-w-[320px] max-w-[280px] md:man-w-[320px] h-36 bg-white rounded-sm shadow flex'>
                                 <div className='bg-slate-200 h-full p-2 min-w-[120px] md:min-w-[145px]'>
