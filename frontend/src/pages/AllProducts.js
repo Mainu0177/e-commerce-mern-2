@@ -9,10 +9,10 @@ const AllProducts = () => {
 
   const fetchAllProduct = async () =>{
     const response  = await fetch(SummaryApi.allProduct.url)
-    const dataRespose = await response.json()
+    const dataResponse = await response.json()
 
-    setAllProduct(dataRespose?.data || [])
-    console.log("get all product", dataRespose)
+    setAllProduct(dataResponse?.data || [])
+    console.log("get all product", dataResponse)
   }
 
   useEffect(() =>{

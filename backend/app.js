@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const morgan = require('morgan');
+// const morgan = require('morgan');
 const createError = require('http-errors');
 const cookieParser = require('cookie-parser')
 require('dotenv').config()
@@ -16,10 +16,10 @@ app.use(cors({
     origin : process.env.FRONTEND_URL,
     credentials : true
 }));
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 app.use(cookieParser())
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+// app.use(express.urlencoded({extended: true}));
 
 // auth router
 app.use('/api/auth', authRouter)
