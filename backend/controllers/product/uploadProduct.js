@@ -2,7 +2,7 @@
 const uploadProductPermission = require('../../helpers/permission')
 const productModel = require('../../models/productModel')
 
-const uploadProduct = async (req, res) =>{
+const uploadProducts = async (req, res) =>{
     try {
         const sessionUserId = req.userId
 
@@ -29,4 +29,4 @@ const uploadProduct = async (req, res) =>{
     }
 }
 
-module.exports = uploadProduct;
+module.exports = uploadProducts;

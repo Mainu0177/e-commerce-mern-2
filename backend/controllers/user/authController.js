@@ -57,7 +57,7 @@ const handleSignUp = async (req, res ) =>{
 
 const handleSignIn = async (req, res) =>{
     try {
-            const { email , password} = req.body
+            const { email , password } = req.body
     
             if(!email){
                 throw new Error("Please provide email")

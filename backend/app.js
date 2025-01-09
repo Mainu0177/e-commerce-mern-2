@@ -1,12 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 // const morgan = require('morgan');
-const createError = require('http-errors');
+// const createError = require('http-errors');
 const cookieParser = require('cookie-parser')
 require('dotenv').config()
 
 
-const { errorResponse } = require('./helpers/responseController');
+// const { errorResponse } = require('./helpers/responseController');
 const authRouter = require('./routers/authRouter');
 const productRouter = require('./routers/productRouter')
 
@@ -17,8 +17,8 @@ app.use(cors({
     credentials : true
 }));
 // app.use(morgan('dev'));
-app.use(cookieParser())
 app.use(express.json());
+app.use(cookieParser())
 // app.use(express.urlencoded({extended: true}));
 
 // auth router
