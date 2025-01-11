@@ -13,7 +13,7 @@ const uploadProducts = async (req, res) =>{
         const uploadProduct = new productModel(req.body)
         const saveProduct = await uploadProduct.save()
 
-        console.log("product", req.body)
+        console.log("product", req?.body)
         res.status(201).json({
             data : saveProduct,
             message : "Product upload successfully",
